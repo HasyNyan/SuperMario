@@ -38,7 +38,7 @@ void Title::Update()
 	{
 		//if (is_Title_Time == TRUE)
 		//{
-		scene_next = STAGE;
+		//GetSceneNext() = STAGE;
 		//}
 	}
 
