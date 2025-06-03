@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 class Game
 {
 public:
@@ -12,6 +13,8 @@ public:
 
 #define COLOR_PLAYER	GetColor( 128, 128, 255 )
 #define COLOR_NPC		GetColor( 255, 128, 128 )
+
+	std::unique_ptr<Game> scene_next = std::make_unique<Game>();
 
 	void GameInit();	//	‰Šú‰»ˆ—
 	void GameUpdate();	//	XVˆ—

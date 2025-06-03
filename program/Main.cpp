@@ -10,12 +10,13 @@ int NowMouseX;
 int NowMouseY;
 int BeforeMouseX;
 int BeforeMouseY;
-
+Game game;
 //---------------------------------------------------------------------------------
 //	WinMain
 //---------------------------------------------------------------------------------
 int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
 {
+	
 	int Time;
 
 	SetOutApplicationLogValidFlag( FALSE );
@@ -40,7 +41,7 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	MouseLeftFrame = 0;
 	MouseRightFrame = 0;
 
-	GameInit();
+	game.GameInit();
 
 	while( TRUE )
 	{
@@ -63,8 +64,8 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		NowMouseX = GetMouseX();
 		NowMouseY = GetMouseY();
 
-		GameUpdate();
-		GameRender();
+		game.GameUpdate();
+		game.GameRender();
 
 		BeforeMouseX = NowMouseX;
 		BeforeMouseY = NowMouseY;
@@ -75,7 +76,7 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		if( CheckHitKey( KEY_INPUT_ESCAPE ) )	break;
 	}
 
-	GameExit();
+	game.GameExit();
 
 	DxLib_End();
 	return 0;
