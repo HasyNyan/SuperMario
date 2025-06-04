@@ -13,6 +13,7 @@
 //int name_x;
 //float name_y;
 //bool  is_Title_Time;
+Game scene_title;
 //---------------------------------------------------------------------------------
 //	èâä˙âª
 //---------------------------------------------------------------------------------
@@ -38,7 +39,7 @@ void Title::Update()
 	{
 		//if (is_Title_Time == TRUE)
 		//{
-		scene_next = STAGE;
+			scene_title.ChangeGameScene(scene_title.STAGE);
 		//}
 	}
 
@@ -71,5 +72,5 @@ void Title::Render()
 //---------------------------------------------------------------------------------
 void Title::Exit()
 {
-	//DeleteGraph(title_image);
+	DeleteGraph(_img);
 }

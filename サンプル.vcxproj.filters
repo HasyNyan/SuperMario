@@ -51,7 +51,7 @@
     <ClCompile Include="program\Object.cpp">
       <Filter>program\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="program\Enemy_Turtle.cpp">
+    <ClCompile Include="program\EnemyTurtle.cpp">
       <Filter>program\Actor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClInclude Include="program\Object.h">
       <Filter>program\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="program\Enemy_Turtle.h">
+    <ClInclude Include="program\EnemyTurtle.h">
       <Filter>program\Actor</Filter>
     </ClInclude>
   </ItemGroup>

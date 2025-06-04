@@ -6,6 +6,12 @@
 #include "Stage.h"
 #include "Goal.h"
 
+//次に行きたいシーンを入れる関数
+//int scene_next;
+//	今どこのシーンにいるのかを見る用の変数
+int scene_num;
+
+int scene_next;
 //クラス宣言
 Title title;
 Stage stage;
@@ -13,7 +19,7 @@ Goal  goal;
 //---------------------------------------------------------------------------------
 //	初期化処理
 //---------------------------------------------------------------------------------
-void GameInit()
+void Game::GameInit()
 {
 	scene_num = TITLE;
 	scene_next = TITLE;
@@ -22,7 +28,7 @@ void GameInit()
 //---------------------------------------------------------------------------------
 //	更新処理
 //---------------------------------------------------------------------------------
-void GameUpdate()
+void Game::GameUpdate()
 {
 	//	今のシーン番号と次に行きたいシーン番号が
 	//	違っている時だけこの処理を呼びます
@@ -31,7 +37,7 @@ void GameUpdate()
 		//	今のシーン番号を次の番号に切り替えて
 		scene_num = scene_next;
 		//	そのシーンに合わせた初期化処理を呼びます
-		switch (scene_num)
+		switch (GetSceneNum())
 		{
 		case TITLE:
 			title.Init();
@@ -45,7 +51,7 @@ void GameUpdate()
 		}
 	}
 	//今のシーンに合わせた更新処理を呼ぶ
-	switch (scene_num)
+	switch (GetSceneNum())
 	{
 	case TITLE:
 		title.Update();
@@ -61,10 +67,10 @@ void GameUpdate()
 //---------------------------------------------------------------------------------
 //	描画処理
 //---------------------------------------------------------------------------------
-void GameRender()
+void Game::GameRender()
 {
 	//今のシーンに合わせた更新処理を呼ぶ
-	switch (scene_num)
+	switch (GetSceneNum())
 	{
 	case TITLE:
 		title.Render();
@@ -80,10 +86,10 @@ void GameRender()
 //---------------------------------------------------------------------------------
 //	終了処理
 //---------------------------------------------------------------------------------
-void GameExit()
+void Game::GameExit()
 {
 	//今のシーンに合わせた更新処理を呼ぶ
-	switch (scene_num)
+	switch (GetSceneNum())
 	{
 	case TITLE:
 		title.Exit();
@@ -95,4 +101,19 @@ void GameExit()
 		goal.Exit();
 		break;
 	}
+}
+
+void Game::ChangeGameScene(int next_scene)
+{
+	scene_next = next_scene;
+}
+
+int Game::GetSceneNum()
+{
+	return scene_num;
+}
+
+int Game::GetSceneNext()
+{
+	return scene_next;
 }
