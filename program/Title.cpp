@@ -72,5 +72,5 @@ void Title::Render()
 //---------------------------------------------------------------------------------
 void Title::Exit()
 {
-	//DeleteGraph(title_image);
+	DeleteGraph(_img);
 }
