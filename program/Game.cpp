@@ -11,18 +11,18 @@
 //	今どこのシーンにいるのかを見る用の変数
 int scene_num;
 
+int scene_next;
 //クラス宣言
 Title title;
 Stage stage;
 Goal  goal;
-Game game;
 //---------------------------------------------------------------------------------
 //	初期化処理
 //---------------------------------------------------------------------------------
 void Game::GameInit()
 {
 	scene_num = TITLE;
-	scene_next -> STAGE;
+	scene_next = TITLE;
 	title.Init();
 }
 //---------------------------------------------------------------------------------
@@ -32,10 +32,10 @@ void Game::GameUpdate()
 {
 	//	今のシーン番号と次に行きたいシーン番号が
 	//	違っている時だけこの処理を呼びます
-	if (scene_num != *scene_next)
+	if (scene_num != scene_next)
 	{
 		//	今のシーン番号を次の番号に切り替えて
-		scene_num = *scene_next;
+		scene_num = scene_next;
 		//	そのシーンに合わせた初期化処理を呼びます
 		switch (GetSceneNum())
 		{
@@ -101,6 +101,11 @@ void Game::GameExit()
 		goal.Exit();
 		break;
 	}
+}
+
+void Game::ChangeGameScene(int next_scene)
+{
+	scene_next = next_scene;
 }
 
 int Game::GetSceneNum()
