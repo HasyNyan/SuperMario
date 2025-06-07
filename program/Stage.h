@@ -1,5 +1,6 @@
 #pragma once
 
+
 class Stage
 {
 public:
@@ -8,4 +9,5 @@ public:
 	void Update();
 	void Render();
 	void Exit();
+
 };
