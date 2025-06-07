@@ -156,6 +156,7 @@
     <ClCompile Include="program\Game.cpp" />
     <ClCompile Include="program\Goal.cpp" />
     <ClCompile Include="program\Hit.cpp" />
+    <ClCompile Include="program\Kinoko.cpp" />
     <ClCompile Include="program\Main.cpp" />
     <ClCompile Include="program\Map.cpp" />
     <ClCompile Include="program\Object.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="program\Game.h" />
     <ClInclude Include="program\Goal.h" />
     <ClInclude Include="program\Hit.h" />
+    <ClInclude Include="program\Kinoko.h" />
     <ClInclude Include="program\Main.h" />
     <ClInclude Include="program\Map.h" />
     <ClInclude Include="program\Object.h" />

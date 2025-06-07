@@ -1,12 +1,24 @@
 #pragma once
-#include"Object.h"
-class Enemy :public Object
+#include"Kinoko.h"
+class Enemy :public Kinoko
 {
 public:
-	float _speed;
+
+	int _rotation;
+	//bool _isMove = false;
 
 	void Init()override;
 	void Update()override;
 	void Render()override;
 	void Exit()override;
+
+	void CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])override;
+
+	void MoveOn(float x, float y)override;
+
+	void GetMapOffSetX(float x)override;
 };
+
+constexpr int ENEMY_MOVE_SPEED_X = 1;
+
+constexpr int ENEMY_MOVE_SPEED_Y = 4;

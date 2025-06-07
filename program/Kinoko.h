@@ -11,12 +11,12 @@ public:
 	void Render()override;
 	void Exit()override;
 
-	void CheckMap(int map[MAP_H][MAP_W] , float bVecY[MAP_H][MAP_W]);
+	virtual void CheckMap(int map[MAP_H][MAP_W] , float bVecY[MAP_H][MAP_W]);
 
-	void MoveOn(float x, float y);
+	virtual void MoveOn(float x, float y);
 	bool _isMove = false;
 
-	void GetMapOffSetX(float x);
+	virtual void GetMapOffSetX(float x);
 	float _mapOffSetX = 0.0f;
 
 

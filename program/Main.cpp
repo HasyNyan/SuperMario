@@ -1,6 +1,8 @@
 #include "Main.h"
 #include "Game.h"
-
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 char KeyBuffer[256];
 int KeyFrame[256];
 int MouseLeftFrame;
@@ -79,6 +81,10 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	game.GameExit();
 
 	DxLib_End();
+	
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
 

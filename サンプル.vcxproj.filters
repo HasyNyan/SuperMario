@@ -54,6 +54,9 @@
     <ClCompile Include="program\EnemyTurtle.cpp">
       <Filter>program\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="program\Kinoko.cpp">
+      <Filter>program\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Game.h">
@@ -93,6 +96,9 @@
       <Filter>program\Actor</Filter>
     </ClInclude>
     <ClInclude Include="program\EnemyTurtle.h">
+      <Filter>program\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Kinoko.h">
       <Filter>program\Actor</Filter>
     </ClInclude>
   </ItemGroup>
