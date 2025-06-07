@@ -23,7 +23,23 @@ int GetMouseMoveY();
 float TO_RADIAN( float degree );
 float TO_DEGREE( float radian );
 
+// ゲームの段階用の変数
+enum GameScene
+{
+	TITLE,
+	STAGE,
+	GOAL,
+};
+//次に行きたいシーンを入れる関数
+extern int scene_next;
+//	今どこのシーンにいるのかを見る用の変数
+extern int scene_num;
+
+#define MAP_W   100
+#define MAP_H   11
+#define BOX_SIZE 32
+
 //命名規則
 //定数		アッパースネークケース	UPPER_SNAKE_CASE
-//関数				パスカルケース	　PascalCase();	
+//関数				パスカルケース	　Pascal_Case();	
 //変数名				スネークケース	　　 snake_case;
