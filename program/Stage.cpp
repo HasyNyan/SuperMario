@@ -1,26 +1,67 @@
 #include "Main.h"
 #include "Game.h"
 #include "Stage.h"
-#include "Enemy.h"
+#include "Map.h"
+#include "Player.h"
+#include "Kinoko.h"
 
-Enemy enemy;
+//マップ
+Map map01;
+
+//マリオ
+Player mario;
+
+//キノコ
+Kinoko kinoko;
+
 
 void Stage::Init()
 {
-	enemy.Init();
+	//マリオ
+	mario.Init();
+	//マップ
+	map01.Init();
+	kinoko.Init();
+
 }
 
 void Stage::Update()
 {
-	enemy.Update();
+	//プレイヤー
+	mario.Update();
+	mario.CheckMap(map01,kinoko);
+
+	//マップ
+	map01.Update(mario._pos.x);
+
+	//キノコ
+	kinoko.Update();
+	kinoko.CheckMap(map01.stageData , map01._vecY);
+	kinoko.GetMapOffSetX(map01._offSetX);
+
 }
 
 void Stage::Render()
 {
-	enemy.Render();
+	//マップ
+	map01.Render();
+
+	//マリオ
+	mario.Render();
+
+	//キノコ
+	kinoko.Render();
+
+	//debug
+	DrawString(0, 0, "STAGE01", GetColor(255, 255, 255));
+
 }
 
 void Stage::Exit()
 {
-	enemy.Exit();
+	mario.Exit();
+	//マップ
+	map01.Exit();
+
+	kinoko.Exit();
 }
