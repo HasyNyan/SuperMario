@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Kinoko.h"
+#include "Enemy.h"
 
 //マップ
 Map map01;
@@ -13,7 +14,8 @@ Player mario;
 
 //キノコ
 Kinoko kinoko;
-
+//クリボー
+Enemy enemy;
 
 void Stage::Init()
 {
@@ -21,7 +23,10 @@ void Stage::Init()
 	mario.Init();
 	//マップ
 	map01.Init();
+	//キノコ
 	kinoko.Init();
+	//クリボーの初期化処理
+	enemy.Init();
 
 }
 
@@ -29,7 +34,7 @@ void Stage::Update()
 {
 	//プレイヤー
 	mario.Update();
-	mario.CheckMap(map01,kinoko);
+	mario.CheckMap(map01,kinoko,enemy);
 
 	//マップ
 	map01.Update(mario._pos.x);
@@ -38,7 +43,10 @@ void Stage::Update()
 	kinoko.Update();
 	kinoko.CheckMap(map01.stageData , map01._vecY);
 	kinoko.GetMapOffSetX(map01._offSetX);
-
+	//クリボーの更新処理
+	enemy.Update();
+	enemy.CheckMap(map01.stageData, map01._vecY);
+	enemy.GetMapOffSetX(map01._offSetX);
 }
 
 void Stage::Render()
@@ -51,7 +59,8 @@ void Stage::Render()
 
 	//キノコ
 	kinoko.Render();
-
+	//クリボーの描画処理
+	enemy.Render();
 	//debug
 	DrawString(0, 0, "STAGE01", GetColor(255, 255, 255));
 
@@ -64,4 +73,6 @@ void Stage::Exit()
 	map01.Exit();
 
 	kinoko.Exit();
+	//クリボーの終了処理
+	enemy.Exit();
 }

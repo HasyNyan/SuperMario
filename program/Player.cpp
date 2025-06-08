@@ -57,7 +57,7 @@ void Player::Exit()
 }
 
 
-void Player::CheckMap(Map & map, Kinoko &kinoko)
+void Player::CheckMap(Map & map, Kinoko &kinoko ,Enemy &enemy)
 {
 
     _mapOffSetX = map._offSetX;
@@ -180,6 +180,18 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
     {
         for (int x = startX; x <= endX; x++)
         {
+
+            //プレイヤーの中心をとる
+            float playerMidX = _pos.x + PLAYER_W * 0.5f;
+
+            //プレイヤーの中心を多次元配列にする
+            int midBlockX = (int)(playerMidX / BOX_SIZE);
+            //敵が出現する距離を多次元配列に合わせる
+            int enemy_distance = (int)(ENEMY_DISTANCE / BOX_SIZE);
+            //プレイヤーから一定範囲内に来たらクリボーを動かす
+            if (map.stageData[y][midBlockX + enemy_distance ] == MAP_ENEMY) {
+                enemy.MoveOn((float)midBlockX + enemy_distance * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
+            }
 
             //障害物との当たり判定
             if (map.stageData[y][x] == MAP_EMPTY) continue;

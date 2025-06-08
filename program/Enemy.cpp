@@ -42,7 +42,7 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
 {
     if (!_isMove) return;
 
-    //キノコの左右上下
+    //クリボーの左右上下
     float  left = _pos.x;
     float  right = _pos.x + BOX_SIZE;
     float  top = _pos.y;
@@ -111,7 +111,7 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
             float blockLeft = (float)x * BOX_SIZE;
             float blockRight = blockLeft + BOX_SIZE;
 
-            //左がら右
+            //左から右
             if (_vec.x > 0)
             {
                 _pos.x = blockLeft - BOX_SIZE;

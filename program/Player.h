@@ -4,6 +4,7 @@
 #include "Main.h"
 #include "Float2.h"
 #include "Kinoko.h"
+#include "Enemy.h"
 #include "Hit.h"
 
 #define PLAYER_W 28
@@ -24,7 +25,7 @@ public:
 	void Render()override;
 	void Exit()override;
 
-	void CheckMap(Map & map,Kinoko & kinoko);
+	void CheckMap(Map & map,Kinoko & kinoko,Enemy & enemy);
 	float _mapOffSetX = 0.0f;
 };
 

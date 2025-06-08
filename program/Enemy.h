@@ -1,10 +1,11 @@
 #pragma once
+#include"Game.h"
 #include"Kinoko.h"
 class Enemy :public Kinoko
 {
 public:
 
-	int _rotation;
+	int _rotation = 0;
 	//bool _isMove = false;
 
 	void Init()override;
@@ -22,3 +23,5 @@ public:
 constexpr int ENEMY_MOVE_SPEED_X = 1;
 
 constexpr int ENEMY_MOVE_SPEED_Y = 4;
+
+constexpr int ENEMY_DISTANCE = SCREEN_W / 2;
