@@ -19,8 +19,6 @@ void Map::Init()
 	_mapImg[MAP_USED] = LoadGraph("data/14.png");
 	_mapImg[MAP_BRICK] = LoadGraph("data/04.png");
 
-
-
 	//ƒ}ƒbƒv‚Ì‰Šú‰»
 	for (int y = 0; y < MAP_H; y++)
 	{
