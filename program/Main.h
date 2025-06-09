@@ -36,8 +36,8 @@ extern int scene_next;
 //	¡‚Ç‚±‚ÌƒV[ƒ“‚É‚¢‚é‚Ì‚©‚ğŒ©‚é—p‚Ì•Ï”
 extern int scene_num;
 
-#define MAP_W   100
-#define MAP_H   11
+#define MAP_W   213
+#define MAP_H   14
 #define BOX_SIZE 32
 
 //–½–¼‹K‘¥
