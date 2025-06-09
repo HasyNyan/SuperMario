@@ -13,7 +13,7 @@ void Map::Init()
 	//ƒ}ƒbƒv‚Ì‰æ‘œ
 	_mapImg[MAP_EMPTY] = -1;
 	_mapImg[MAP_BLOCK] = LoadGraph("data/02.png");
-	_mapImg[MAP_GROUND] = LoadGraph("");
+	_mapImg[MAP_GROUND] = LoadGraph("data/03.png");
 	_mapImg[MAP_QUESTION] = LoadGraph("data/01.png");
 	_mapImg[MAP_USED] = LoadGraph("data/14.png");
 	_mapImg[MAP_BRICK] = LoadGraph("");
