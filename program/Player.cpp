@@ -189,9 +189,9 @@ void Player::CheckMap(Map & map, Kinoko &kinoko ,Enemy &enemy)
             //敵が出現する距離を多次元配列に合わせる
             int enemy_distance = (int)(ENEMY_DISTANCE / BOX_SIZE);
             //プレイヤーから一定範囲内に来たらクリボーを動かす
-            if (map.stageData[y][midBlockX + enemy_distance ] == MAP_ENEMY) {
-                enemy.MoveOn((float)midBlockX + enemy_distance * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
-            }
+           // if (map.stageData[y][midBlockX + enemy_distance ] == MAP_ENEMY) {
+           //     enemy.MoveOn((float)midBlockX + enemy_distance * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
+           // }
 
             //障害物との当たり判定
             if (map.stageData[y][x] == MAP_EMPTY) continue;

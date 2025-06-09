@@ -4,8 +4,8 @@
 
 void Enemy::Init()
 {
-	_isMove = false;
-	_pos.Set(-500.0f,- 500.0f);
+	_isMove = true;
+	_pos.Set(0.0f,0.0f);
 	_img = LoadGraph("data/enemy.png");
     _rotation = 0;
 }
@@ -17,7 +17,7 @@ void Enemy::Update()
 		//‰E‚ÉˆÚ“®
 		if (_left)
 		{
-			_vec.x = ENEMY_MOVE_SPEED_X;
+			_vec.x = -ENEMY_MOVE_SPEED_X;
 		}
 		else
 		{
@@ -30,7 +30,7 @@ void Enemy::Update()
 
 void Enemy::Render()
 {
-	DrawRotaGraphF(_pos.x + _mapOffSetX, _pos.y,1,_rotation, _img, TRUE);
+	DrawRotaGraphF((_pos.x + _mapOffSetX) + (BOX_SIZE / 2), _pos.y + (BOX_SIZE / 2), 1, _rotation, _img, TRUE);
 }
 
 void Enemy::Exit()

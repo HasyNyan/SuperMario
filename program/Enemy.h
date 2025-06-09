@@ -23,5 +23,5 @@ public:
 constexpr int ENEMY_MOVE_SPEED_X = 1;
 
 constexpr int ENEMY_MOVE_SPEED_Y = 4;
-
+//プレイヤーから見てのクリボーが出現する距離
 constexpr int ENEMY_DISTANCE = SCREEN_W / 2;
