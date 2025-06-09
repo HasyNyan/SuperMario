@@ -8,6 +8,7 @@ Map map[MAP_H][MAP_W];
 
 void Map::Init()
 {
+	//マップ背景
 	_mapScreen = LoadGraph("data/map.png");
 
 	//マップの画像
@@ -16,7 +17,7 @@ void Map::Init()
 	_mapImg[MAP_GROUND] = LoadGraph("data/03.png");
 	_mapImg[MAP_QUESTION] = LoadGraph("data/01.png");
 	_mapImg[MAP_USED] = LoadGraph("data/14.png");
-	_mapImg[MAP_BRICK] = LoadGraph("");
+	_mapImg[MAP_BRICK] = LoadGraph("data/04.png");
 
 	//マップの初期化
 	for (int y = 0; y < MAP_H; y++)

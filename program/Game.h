@@ -4,7 +4,7 @@ class Game
 {
 public:
 #define SCREEN_W	800
-#define SCREEN_H	450
+#define SCREEN_H	448
 
 #define COLOR_WHITE		GetColor( 255, 255, 255 )
 #define COLOR_BLACK		GetColor(   0,   0,   0 )
