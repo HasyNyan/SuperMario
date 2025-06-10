@@ -1,11 +1,14 @@
 #include "Main.h"
 #include "Game.h"
 #include "Enemy.h"
+#include "Player.h"
+
+Player obj;
 
 void Enemy::Init()
 {
-	_isMove = true;
-	_pos.Set(0.0f,0.0f);
+	_isMove = false;
+    _pos.Set(-500.0f, -500.0f);
 	_img = LoadGraph("data/enemy.png");
     _rotation = 0;
 }
@@ -122,6 +125,13 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
             {
                 _pos.x = blockRight;
                 _left = false;
+            }
+            //敵が出現する距離を多次元配列に合わせる
+            int enemy_distance = (int)(ENEMY_DISTANCE / BOX_SIZE);
+            //プレイヤーから一定範囲内に来たらクリボーを動かす
+            if (map[y][obj.GetMidblockX() + enemy_distance ] == MAP_ENEMY) 
+            {
+                MoveOn(((float)obj.GetMidblockX() + enemy_distance) * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
             }
         }
     }

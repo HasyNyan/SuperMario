@@ -1,7 +1,7 @@
 #pragma once
 #include"Game.h"
 #include"Kinoko.h"
-class Enemy :public Kinoko
+class Enemy : public Kinoko
 {
 public:
 

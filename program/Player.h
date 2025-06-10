@@ -25,7 +25,8 @@ public:
 	void Render()override;
 	void Exit()override;
 
-	void CheckMap(Map & map,Kinoko & kinoko,Enemy & enemy);
+	void CheckMap(Map & map,Kinoko & kinoko);
+	int GetMidblockX();
 	float _mapOffSetX = 0.0f;
 };
 

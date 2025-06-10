@@ -57,7 +57,7 @@ void Player::Exit()
 }
 
 
-void Player::CheckMap(Map & map, Kinoko &kinoko ,Enemy &enemy)
+void Player::CheckMap(Map & map, Kinoko &kinoko)
 {
 
     _mapOffSetX = map._offSetX;
@@ -186,12 +186,6 @@ void Player::CheckMap(Map & map, Kinoko &kinoko ,Enemy &enemy)
 
             //プレイヤーの中心を多次元配列にする
             int midBlockX = (int)(playerMidX / BOX_SIZE);
-            //敵が出現する距離を多次元配列に合わせる
-            int enemy_distance = (int)(ENEMY_DISTANCE / BOX_SIZE);
-            //プレイヤーから一定範囲内に来たらクリボーを動かす
-           // if (map.stageData[y][midBlockX + enemy_distance ] == MAP_ENEMY) {
-           //     enemy.MoveOn((float)midBlockX + enemy_distance * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
-           // }
 
             //障害物との当たり判定
             if (map.stageData[y][x] == MAP_EMPTY) continue;
@@ -244,5 +238,15 @@ void Player::CheckMap(Map & map, Kinoko &kinoko ,Enemy &enemy)
 
     DrawFormatString(0, 20, GetColor(255, 255, 255), "X1;%d,Y1;%d,X2;%d,Y2;%d,offsetx%f  G:%d VX%f,VY%f", 
                                             startX, startY, endX, endY , _mapOffSetX,_isOnGround,_vec.x , _vec.y);
+}
+
+int Player::GetMidblockX()//多次元配列内のプレイヤーの中心座標を受け取る関数
+{
+    //プレイヤーの中心をとる
+    float playerMidX = _pos.x + PLAYER_W * 0.5f;
+    //プレイヤーの中心を多次元配列にする
+    int midBlockX = (int)(playerMidX / BOX_SIZE);
+
+    return midBlockX;
 }
 

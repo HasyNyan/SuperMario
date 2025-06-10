@@ -34,7 +34,7 @@ void Stage::Update()
 {
 	//プレイヤー
 	mario.Update();
-	mario.CheckMap(map01,kinoko,enemy);
+	mario.CheckMap(map01,kinoko);
 
 	//マップ
 	map01.Update(mario._pos.x);
