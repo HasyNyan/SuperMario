@@ -284,8 +284,6 @@ void Player::CheckMap(Map & map, Kinoko *& kinoko , Flower *& flower)
         //画像を変更
         _img = _modeImg[_mode];
     }
-
-
     //debug
     //DrawBoxAA(left + _mapOffSetX, top, right + _mapOffSetX, bottom, GetColor(255, 255, 255), 0);
 
@@ -316,5 +314,10 @@ void Player::FireBall(Fire* fire[2])
             }
         }
     }
+}
+
+float Player::GetPlayerPosX()
+{
+    return _pos.x;
 }
 

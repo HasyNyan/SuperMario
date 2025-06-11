@@ -50,6 +50,7 @@ public:
 
 	void FireBall(Fire* fire[2]);
 
+	float GetPlayerPosX();
 
 	float _mapOffSetX = 0.0f;
 };

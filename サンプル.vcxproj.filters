@@ -57,6 +57,12 @@
     <ClCompile Include="program\Kinoko.cpp">
       <Filter>program\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="program\Flower.cpp">
+      <Filter>program\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Fire.cpp">
+      <Filter>program\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Game.h">
@@ -99,6 +105,12 @@
       <Filter>program\Actor</Filter>
     </ClInclude>
     <ClInclude Include="program\Kinoko.h">
+      <Filter>program\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Flower.h">
+      <Filter>program\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Fire.h">
       <Filter>program\Actor</Filter>
     </ClInclude>
   </ItemGroup>

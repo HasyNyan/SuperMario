@@ -1,6 +1,9 @@
 #include "Main.h"
 #include "Game.h"
 #include "Enemy.h"
+#include "Player.h"
+ 
+Player obj;
 
 void Enemy::Init()
 {
@@ -42,7 +45,7 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
 {
     if (!_isMove) return;
 
-    //キノコの左右上下
+    //クリボーの左右上下
     float  left = _pos.x;
     float  right = _pos.x + BOX_SIZE;
     float  top = _pos.y;
@@ -161,6 +164,46 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
     {
         //重力
         _vec.y += 1.0f;
+    }
+
+}
+//プレイヤーから見てクリボーの出現位置に来たらクリボーを出現させる
+void Enemy::SearchEnemy(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
+{
+    //クリボーの左右上下
+    float  left = _pos.x;
+    float  right = _pos.x + BOX_SIZE;
+    float  top = _pos.y;
+    float  bottom = _pos.y + BOX_SIZE;
+
+    //マップの配列外しないように
+    int startX = (int)(left / BOX_SIZE);
+    if (startX < 0) startX = 0;
+
+    int startY = (int)(top / BOX_SIZE);
+    if (startY < 0) startY = 0;
+
+    int endX = (int)((right - 1) / BOX_SIZE);
+    if (endX > MAP_W - 1) endX = MAP_W - 1;
+
+    int endY = (int)((bottom - 1) / BOX_SIZE);
+    if (endY > MAP_H - 1) endY = MAP_H - 1;
+
+    for (int y = startY; y <= endY; y++)
+    {
+        for (int x = startX; x <= endX; x++)
+        {
+            //プレイヤーからみてクリボーの出現距離をプラス
+            float enemy_distance = obj.GetPlayerPosX() + ENEMY_DISTANCE;
+            //プレイヤーから見たクリボーの距離を多次元配列の座標に
+            int enemy_block_x = (int)(enemy_distance / BOX_SIZE);
+            if (map[y][enemy_block_x] == MAP_ENEMY) 
+            {
+                map[y][enemy_block_x] = MAP_EMPTY;
+                MoveOn();
+            }
+
+        }
     }
 
 }
