@@ -17,19 +17,17 @@ public:
 	bool _isMove = false;
 
 	virtual void GetMapOffSetX(float x);
+	
 	float _mapOffSetX = 0.0f;
 
-
 	Float2 _vec;
-
 	Float2 _boxSize = {BOX_SIZE , BOX_SIZE};
-
 
 	bool _left = false;
 
+
 };
 
+
 #define K_MOVE_SPEED_X 1;
-
 #define K_MOVE_SPEED_Y 4;
-

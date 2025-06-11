@@ -4,9 +4,15 @@ Player player;
 void Player::Init()
 {
 	_pos = { 0,0 };
-	_img = LoadGraph("data/player.png");
+	
     _isOnGround = false;
+    _modeImg[0] = LoadGraph("data/player.png");
+    _modeImg[1] = LoadGraph("data/big.png");
+    _modeImg[2] = LoadGraph("data/fire.png");
+
+    _img = _modeImg[_mode];
 }
+
 
 void Player::Update()
 {
@@ -16,6 +22,7 @@ void Player::Update()
         if (_pos.x + _mapOffSetX > 0.0f)
         {
             _vec.x = -MOVE_SPEED;
+            _leftWay = true;
         }
         else
         {
@@ -27,6 +34,7 @@ void Player::Update()
     else if (CheckHitKey(KEY_INPUT_RIGHT))
     {
         _vec.x = MOVE_SPEED;
+        _leftWay = false;
     }
     else
     {
@@ -57,7 +65,7 @@ void Player::Exit()
 }
 
 
-void Player::CheckMap(Map & map, Kinoko &kinoko)
+void Player::CheckMap(Map & map, Kinoko *& kinoko , Flower *& flower)
 {
 
     _mapOffSetX = map._offSetX;
@@ -67,9 +75,9 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
 
     //プレイヤーの左右上下
     float  left = _pos.x;
-    float  right = _pos.x + PLAYER_W;
+    float  right = _pos.x  + _boxSize[_mode].x;
     float  top = _pos.y;
-    float  bottom = _pos.y + PLAYER_H;
+    float  bottom = _pos.y + _boxSize[_mode].y;
 
     //マップの配列外しないように
     int startX = (int)(left / BOX_SIZE);
@@ -99,8 +107,8 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
             if (_vec.y < 0) {
 
                 //プレイヤーがブロックの左が右の判定
-                bool atLeft  = (right - blockLeft) < (PLAYER_W * 0.5f);
-                bool atRight = (blockRight - left) < (PLAYER_W * 0.5f);
+                bool atLeft  = (right - blockLeft) < (_boxSize[_mode].x * 0.5f);
+                bool atRight = (blockRight - left) < (_boxSize[_mode].x * 0.5f);
 
                 //ブロックの左右が空いてるかどうかの判定
                 bool checkEmptyLeft  = (x > 0)         && (map.stageData[y][x - 1] == MAP_EMPTY);
@@ -112,7 +120,7 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
 
                 //左に滑る
                 if (slideLeft) {
-                    _pos.x = blockLeft - PLAYER_W - 1;
+                    _pos.x = blockLeft - _boxSize[_mode].x - 1;
                 }
                 //右に滑る
                 else if (slideRight) {
@@ -126,7 +134,7 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
                 }
     
                 //プレイヤーの中心をとる
-                float playerMidX = _pos.x + PLAYER_W * 0.5f;
+                float playerMidX = _pos.x + _boxSize[_mode].x * 0.5f;
 
                 //プレイヤーの中心を多次元配列にする
                 int midBlockX = (int)(playerMidX / BOX_SIZE);
@@ -135,18 +143,46 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
                 if (map.stageData[y][midBlockX] == MAP_QUESTION ) {
 
                     map.stageData[y][midBlockX] = MAP_USED;
-                    kinoko.MoveOn((float)midBlockX * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
+
+                    if (_mode == MODE_SMALL)
+                    {
+                        //キノコ生成
+                        kinoko = new Kinoko();
+                        kinoko->Init();
+
+                        if (kinoko) {
+                            kinoko->MoveOn((float)midBlockX * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
+                        }
+                    }
+                    else
+                    {
+                        //花の生成
+                        flower = new Flower();
+                        flower->Init();
+
+                        if (flower)
+                        {
+                            flower->SetPos((float)midBlockX * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
+                        }
+                    }
                 }
+
 
                 //ブロックとの当たり判定
                 if (map.stageData[y][midBlockX] == MAP_BLOCK) {
+
+                    if (_mode != MODE_SMALL)
+                    {
+                        map.stageData[y][midBlockX] = MAP_EMPTY;
+                    }
+
                     map.PushBlock(y, midBlockX);
                 }
             }
 
             //上から下
             else if (_vec.y > 0) {
-                _pos.y = blockTop - PLAYER_H;
+                _pos.y = blockTop - _boxSize[_mode].y;
                 _vec.y = 0;
           
             }
@@ -157,9 +193,9 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
     _pos.x += _vec.x;
 
     left = _pos.x;
-    right = _pos.x + PLAYER_W;
+    right = _pos.x + _boxSize[_mode].x;
     top = _pos.y;
-    bottom = _pos.y + PLAYER_H;
+    bottom = _pos.y + _boxSize[_mode].y;
 
     //プレイヤーの座標を配列化する
     //左
@@ -184,11 +220,11 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
             //障害物との当たり判定
             if (map.stageData[y][x] == MAP_EMPTY) continue;
             
-            float blockLeft = (float)x * BOX_SIZE;
+            float blockLeft  = (float)x  * BOX_SIZE;
             float blockRight = blockLeft + BOX_SIZE;
 
             //左がら右
-            if (_vec.x > 0) _pos.x = blockLeft - PLAYER_W;
+            if (_vec.x > 0) _pos.x = blockLeft - _boxSize[_mode].x;
 
             //右から左
             else if (_vec.x < 0) _pos.x = blockRight;
@@ -199,9 +235,9 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
     }
 
     //足元の座標（多次元配列）
-    int footY  = (int)(_pos.y + PLAYER_H) / BOX_SIZE;
+    int footY  = (int)(_pos.y + _boxSize[_mode].y) / BOX_SIZE;
     int footX1 = (int)(_pos.x ) / BOX_SIZE;
-    int footX2 = (int)(_pos.x + PLAYER_W - 1 ) / BOX_SIZE;
+    int footX2 = (int)(_pos.x + _boxSize[_mode].x - 1 ) / BOX_SIZE;
 
     //足元のがなんもない時飛べない処理
     _isOnGround = false;
@@ -213,24 +249,72 @@ void Player::CheckMap(Map & map, Kinoko &kinoko)
 
 
     //キノコとプレイヤーとの当たり判定
-    if (CheckBoxHit(_pos,_boxSize, kinoko._pos, kinoko._boxSize))
+    if (kinoko  && CheckBoxHit(_pos,_boxSize[_mode], kinoko ->_pos, kinoko -> _boxSize))
     {
-        kinoko.Init();
+        kinoko->_isMove = false;
+        kinoko->Exit();
+        delete kinoko;
+        kinoko = nullptr;
+   
+   
+
+        //プレイヤーモードを変える
+        if (_mode == MODE_SMALL)
+        {
+            _pos.y = _pos.y - PLAYER_H;
+        }
+        _mode = MODE_BIG;
+        //画像を変更
+        _img = _modeImg[_mode];
+    }
+
+    //キノコとプレイヤーとの当たり判定
+    if (flower && CheckBoxHit(_pos, _boxSize[_mode], flower->_pos, flower->_boxSize))
+    {
+        flower->Exit();
+        delete flower;
+        flower = nullptr;
+
+        //プレイヤーモードを変える
+        if (_mode == MODE_SMALL)
+        {
+            _pos.y = _pos.y - PLAYER_H;
+        }
+        _mode = MODE_FIRE;
+        //画像を変更
+        _img = _modeImg[_mode];
     }
 
 
     //debug
-    DrawBoxAA(left + _mapOffSetX, top, right + _mapOffSetX, bottom, GetColor(255, 255, 255), 0);
+    //DrawBoxAA(left + _mapOffSetX, top, right + _mapOffSetX, bottom, GetColor(255, 255, 255), 0);
 
-    for (int y = startY; y <= endY; y++) {
-        for (int x = startX; x <= endX; x++) {
-            float drawX = (float)x * BOX_SIZE + _mapOffSetX;
-            float drawY = (float)y * BOX_SIZE;
-           DrawBoxAA(drawX, drawY, drawX + BOX_SIZE, drawY + BOX_SIZE, GetColor(255, 0, 0), FALSE);
+    //for (int y = startY; y <= endY; y++) {
+    //    for (int x = startX; x <= endX; x++) {
+    //        float drawX = (float)x * BOX_SIZE + _mapOffSetX;
+    //        float drawY = (float)y * BOX_SIZE;
+    //       DrawBoxAA(drawX, drawY, drawX + BOX_SIZE, drawY + BOX_SIZE, GetColor(255, 0, 0), FALSE);
+    //    }
+    //}
+
+    //DrawFormatString(0, 20, GetColor(255, 255, 255), "X1;%d,Y1;%d,X2;%d,Y2;%d,offsetx%f  G:%d  MODE:%d", 
+    //                                        startX, startY, endX, endY , _mapOffSetX,_isOnGround,_mode);
+}
+
+void Player::FireBall(Fire* fire[2])
+{
+    if (PushHitKey(KEY_INPUT_SPACE)&&_mode == MODE_FIRE)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (!fire[i])
+            {
+                fire[i] = new Fire();
+                fire[i]->Init();
+                fire[i]->SetPos(_pos.x, _pos.y + BOX_SIZE / 2, _leftWay);
+                break; 
+            }
         }
     }
-
-    DrawFormatString(0, 20, GetColor(255, 255, 255), "X1;%d,Y1;%d,X2;%d,Y2;%d,offsetx%f  G:%d VX%f,VY%f", 
-                                            startX, startY, endX, endY , _mapOffSetX,_isOnGround,_vec.x , _vec.y);
 }
 

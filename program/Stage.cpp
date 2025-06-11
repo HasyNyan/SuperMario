@@ -4,6 +4,8 @@
 #include "Map.h"
 #include "Player.h"
 #include "Kinoko.h"
+#include "Flower.h"
+#include "Fire.h"
 
 //マップ
 Map map01;
@@ -12,8 +14,11 @@ Map map01;
 Player mario;
 
 //キノコ
-Kinoko kinoko;
+Kinoko * kinoko;
 
+Flower * flower;
+
+Fire* fire[2];
 
 void Stage::Init()
 {
@@ -21,7 +26,17 @@ void Stage::Init()
 	mario.Init();
 	//マップ
 	map01.Init();
-	kinoko.Init();
+
+	kinoko = nullptr;
+	flower = nullptr;
+
+	for (int i = 0; i < 2; i++)
+	{
+		fire[i] = nullptr;
+	}
+
+	
+
 
 }
 
@@ -29,15 +44,40 @@ void Stage::Update()
 {
 	//プレイヤー
 	mario.Update();
-	mario.CheckMap(map01,kinoko);
+	mario.CheckMap(map01, kinoko, flower);
+
+	mario.FireBall(fire);
+
+
+
 
 	//マップ
 	map01.Update(mario._pos.x);
 
 	//キノコ
-	kinoko.Update();
-	kinoko.CheckMap(map01.stageData , map01._vecY);
-	kinoko.GetMapOffSetX(map01._offSetX);
+	if (kinoko)
+	{
+		kinoko->GetMapOffSetX(map01._offSetX);
+		kinoko->Update();
+		kinoko->CheckMap(map01.stageData, map01._vecY);
+	}
+
+	//花
+	if (flower)
+	{
+		flower->GetMapOffSetX(map01._offSetX);
+	}
+
+	//FIREBALL
+	for (int i = 0; i < 2; i++) {
+
+		if (fire[i])
+		{
+			fire[i]->GetOffSetX(map01._offSetX);
+			fire[i]->Update();
+			fire[i]->CheckMap(map01.stageData, fire[i]);
+		}
+	}
 
 }
 
@@ -46,15 +86,35 @@ void Stage::Render()
 	//マップ
 	map01.Render();
 
+	//FIREBALL
+	for (int i = 0; i < 2; i++) {
+		if (fire[i])
+		{
+			fire[i]->Render();
+		}
+	}
+
+
 	//マリオ
 	mario.Render();
 
 	//キノコ
-	kinoko.Render();
+	if (kinoko)
+		kinoko->Render();
+	
+	//花
+	if (flower)
+	{
+		flower->Render();
+	}
+
+
+
+
+
 
 	//debug
 	DrawString(0, 0, "STAGE01", GetColor(255, 255, 255));
-
 }
 
 void Stage::Exit()
@@ -63,5 +123,30 @@ void Stage::Exit()
 	//マップ
 	map01.Exit();
 
-	kinoko.Exit();
+	if (kinoko)
+	{
+		kinoko->Exit();
+		delete kinoko;
+		kinoko = nullptr;
+	}
+
+	if (flower)
+	{
+		flower->Exit();
+		delete flower;
+		flower = nullptr;
+	}
+
+
+	for (int i = 0; i < 2; i++) {
+		if (fire[i])
+		{
+			fire[i]->Exit();
+			delete fire[i];
+			fire[i] = nullptr;
+		}
+	}
+
+
+
 }

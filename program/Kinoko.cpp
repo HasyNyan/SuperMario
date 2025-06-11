@@ -4,7 +4,7 @@
 void Kinoko::Init()
 {
 	_isMove = false;
-	_pos.Set(-500.0f, -500.0f);
+	//_pos.Set(-500.0f, -500.0f);
 	_img = LoadGraph("data/kinoko.png");;
 }
 
@@ -28,11 +28,12 @@ void Kinoko::Update()
 
 }
 
+
 void Kinoko::Render()
 {
 	DrawGraphF(_pos.x + _mapOffSetX, _pos.y, _img, TRUE);
 
-	DrawFormatString(0, 60, GetColor(255, 255, 255), "vy:%f", _vec.y);
+	//DrawFormatString(0, 60, GetColor(255, 255, 255), "vy:%f", _vec.y);
 
 }
 
@@ -71,8 +72,6 @@ void Kinoko::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
 
             //ブロックの上下左右
             float blockTop = (float)y * BOX_SIZE;
-            float blockBottom = blockTop + BOX_SIZE - 1;
-
 
             //上から下
             if (_vec.y > 0) {
@@ -177,3 +176,5 @@ void Kinoko::GetMapOffSetX(float x)
 {
 	_mapOffSetX = x;
 }
+
+
