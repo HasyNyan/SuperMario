@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClCompile Include="program\Enemy.cpp" />
     <ClCompile Include="program\EnemyTurtle.cpp" />
+    <ClCompile Include="program\Fire.cpp" />
+    <ClCompile Include="program\Flower.cpp" />
     <ClCompile Include="program\Game.cpp" />
     <ClCompile Include="program\Goal.cpp" />
     <ClCompile Include="program\Hit.cpp" />
@@ -169,6 +171,8 @@
   <ItemGroup>
     <ClInclude Include="program\Enemy.h" />
     <ClInclude Include="program\EnemyTurtle.h" />
+    <ClInclude Include="program\Fire.h" />
+    <ClInclude Include="program\Flower.h" />
     <ClInclude Include="program\Game.h" />
     <ClInclude Include="program\Goal.h" />
     <ClInclude Include="program\Hit.h" />

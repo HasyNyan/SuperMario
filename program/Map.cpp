@@ -8,13 +8,16 @@ Map map[MAP_H][MAP_W];
 
 void Map::Init()
 {
+	//マップ背景
+	_mapScreen = LoadGraph("data/map.png");
+
 	//マップの画像
 	_mapImg[MAP_EMPTY] = -1;
 	_mapImg[MAP_BLOCK] = LoadGraph("data/02.png");
-	_mapImg[MAP_GROUND] = LoadGraph("");
+	_mapImg[MAP_GROUND] = LoadGraph("data/03.png");
 	_mapImg[MAP_QUESTION] = LoadGraph("data/01.png");
 	_mapImg[MAP_USED] = LoadGraph("data/14.png");
-	_mapImg[MAP_BRICK] = LoadGraph("");
+	_mapImg[MAP_BRICK] = LoadGraph("data/04.png");
 
 	//マップの初期化
 	for (int y = 0; y < MAP_H; y++)
@@ -39,6 +42,7 @@ void Map::Update(float playX)
 	if (CheckHitKey(KEY_INPUT_RIGHT) && playX > -_offSetX + SCREEN_W / 2)
 	{
 		_offSetX -= MOVE_SPEED ;
+		_mapX -= MOVE_SPEED;
 	}	
 	
 
@@ -68,6 +72,8 @@ void Map::Update(float playX)
 
 void Map::Render()
 {
+	//マップ背景の描画
+	DrawGraph(_mapX, 0, _mapScreen, TRUE);
 	//マップの描画
 	for (int y = 0; y < MAP_H; y++)
 	{
@@ -84,6 +90,7 @@ void Map::Exit()
 	{
 		DeleteGraph(_mapImg[i]);
 	}
+	DeleteGraph(_mapScreen);
 }
 
 void Map::PushBlock(int y, int x)
