@@ -2,13 +2,13 @@
 #include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
-
+ 
 Player obj;
 
 void Enemy::Init()
 {
 	_isMove = false;
-    _pos.Set(-500.0f, -500.0f);
+	_pos.Set(-500.0f,- 500.0f);
 	_img = LoadGraph("data/enemy.png");
     _rotation = 0;
 }
@@ -20,7 +20,7 @@ void Enemy::Update()
 		//右に移動
 		if (_left)
 		{
-			_vec.x = -ENEMY_MOVE_SPEED_X;
+			_vec.x = ENEMY_MOVE_SPEED_X;
 		}
 		else
 		{
@@ -33,7 +33,7 @@ void Enemy::Update()
 
 void Enemy::Render()
 {
-	DrawRotaGraphF((_pos.x + _mapOffSetX) + (BOX_SIZE / 2), _pos.y + (BOX_SIZE / 2), 1, _rotation, _img, TRUE);
+	DrawRotaGraphF(_pos.x + _mapOffSetX, _pos.y,1,_rotation, _img, TRUE);
 }
 
 void Enemy::Exit()
@@ -114,7 +114,7 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
             float blockLeft = (float)x * BOX_SIZE;
             float blockRight = blockLeft + BOX_SIZE;
 
-            //左から右
+            //左がら右
             if (_vec.x > 0)
             {
                 _pos.x = blockLeft - BOX_SIZE;
@@ -125,13 +125,6 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
             {
                 _pos.x = blockRight;
                 _left = false;
-            }
-            //敵が出現する距離を多次元配列に合わせる
-            int enemy_distance = (int)(ENEMY_DISTANCE / BOX_SIZE);
-            //プレイヤーから一定範囲内に来たらクリボーを動かす
-            if (map[y][obj.GetMidblockX() + enemy_distance ] == MAP_ENEMY) 
-            {
-                MoveOn(((float)obj.GetMidblockX() + enemy_distance) * BOX_SIZE, (float)(y - 1) * BOX_SIZE);
             }
         }
     }
@@ -171,6 +164,28 @@ void Enemy::CheckMap(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
     {
         //重力
         _vec.y += 1.0f;
+    }
+
+}
+//プレイヤーから見てクリボーの出現位置に来たらクリボーを出現させる
+void Enemy::SearchEnemy(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
+{
+  
+    for (int y = 0; y <= MAP_H; y++)
+    {
+        for (int x = 0; x <= MAP_W; x++)
+        {
+            //プレイヤーからみてクリボーの出現距離をプラス
+            float enemy_distance = obj.GetPlayerPosX() + ENEMY_DISTANCE;
+            //プレイヤーから見たクリボーの距離を多次元配列の座標に
+            int enemy_block_x = (int)(enemy_distance / BOX_SIZE);
+            if (map[y][enemy_block_x] == MAP_ENEMY) 
+            {
+                map[y][enemy_block_x] = MAP_EMPTY;
+                MoveOn(enemy_block_x,y - 1);
+            }
+
+        }
     }
 
 }
