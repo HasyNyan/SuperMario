@@ -200,7 +200,7 @@ void Enemy::SearchEnemy(int map[MAP_H][MAP_W], float bVecY[MAP_H][MAP_W])
             if (map[y][enemy_block_x] == MAP_ENEMY) 
             {
                 map[y][enemy_block_x] = MAP_EMPTY;
-                MoveOn();
+                //MoveOn();
             }
 
         }
